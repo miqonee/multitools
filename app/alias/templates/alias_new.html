@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "flash.html" %}
+<div class="well">
+    <h3>Создаём алиас</h3>
+    <form action="" method="post" name="new">
+        {{ form.hidden_tag() }}
+        {{ form.key }}
+        <br/>
+        {{ form.cancel(class="btn") }}
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+</div>
+{% endblock %}

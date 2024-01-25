@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "flash.html" %}
+<div class="well">
+    <h3>{{ state['cn'][0] }}</h3>
+    <p>Нынешнее состояние:
+        {% if state['proxyTempBlock'][0]%}
+            {% if state['proxyTempNoBlock'][0]%}
+                <span class="text-warning">Лимит превышен, но ограничение снято до конца месяца</span>
+            {% else %}
+                <span class="text-error">Заблокирован</span>
+            {% endif %}
+        {% else %}
+            <span class="text-success">Всё хорошо</span>
+        {% endif %}
+    </p>
+    <form action="" method="post" name="search">
+        {{ form.noblock(checked=state['proxyTempNoBlock'][0]) }}
+        Не блокировать до конца месяца
+        <p>Лимит трафика в месяц: {{ form.limit(value=state['proxySize'][0]) }}</p>
+        <div class="form-actions">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

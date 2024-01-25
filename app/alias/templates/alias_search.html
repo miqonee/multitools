@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "flash.html" %}
+<h3>Поиск алиасов</h3>
+<div class="well">
+    <a href="{{ url_for('alias.new') }}">
+         <button class="btn pull-right">Создать алиас</button>
+    </a>
+    <form class="form-search" action="" method="post" name="search">
+        {{ form.hidden_tag() }}
+        <div class="input-append">
+            {{ form.search(placeholder="алиас",class="search-query") }}
+            <button type="submit" class="btn btn-success">Найти</button>
+        </div>
+        {% for error in form.search.errors %}
+        <span class="help-inline">[{{ error }}]</span>
+        {% endfor %}
+        <span class="help-block">Можно использовать '*' для поиска по части слова</span>
+    </form>
+    {% if aliases %}
+    <div>
+        <p>Результаты:</p>
+        <ul>
+            {% for key in aliases %}
+            <li>
+                <a href={{ url_for('alias.show', name=key) }}> {{ key }} </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <div>
+        <p>Ничего не найдено</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

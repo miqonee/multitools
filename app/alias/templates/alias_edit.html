@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "flash.html" %}
+<div class="well">
+    <script src="/static/js/alias_edit.js"></script>
+    <h3>Изменить '{{ title }}'</h3>
+    <form action="" method="post" name="edit">
+        {{ form.hidden_tag() }}
+        <p>Описание:</p>
+        <div data-toggle="fieldset" id="description-fieldset">
+            <button type="button" data-toggle="fieldset-add-row"
+                    class="btn btn-success" data-target="#description-fieldset">
+                Добавить
+            </button>
+        {% for line in form.description %}
+            <div data-toggle="fieldset-entry" class="input-append" style="display: block;">
+                {{ line(class="span3") }}
+                <button type="button" data-toggle="fieldset-remove-row"
+                        class="btn btn-danger" id="description-{{loop.index0}}-remove">
+                    <i class="icon-minus"></i>
+                </button>
+            </div>
+        {% endfor %}
+        </div>
+        <p>Нынешние значения:</p>
+        <div data-toggle="fieldset" id="values-fieldset">
+            <button type="button" data-toggle="fieldset-add-row"
+                    class="btn btn-success" data-target="#values-fieldset">
+                Добавить
+            </button>
+            {% for field in form.values %}
+                <div data-toggle="fieldset-entry" class="input-append" style="display: block;">
+                    {{ field() }}
+                    <button type="button" data-toggle="fieldset-remove-row"
+                            class="btn btn-danger" id="values-{{loop.index0}}-remove">
+                        <i class="icon-minus"></i>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+        {{ form.cancel(class="btn") }}
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+</div>
+{% endblock %}

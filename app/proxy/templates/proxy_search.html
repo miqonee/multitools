@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "flash.html" %}
+<h3>Поиск аккаунтов прокси</h3>
+<div class="well">
+    <form class="form-search" action="" method="post" name="search">
+        {{ form.hidden_tag() }}
+        {% for subfield in form.attribute %}
+            <label class="radio">
+                {{ subfield }}
+                {{ subfield.label }}
+            </label>
+        {% endfor %}
+        <div class="input-append">
+            {{ form.search(placeholder="аккаунт",class="span3 search-query") }}
+            <button type="submit" class="btn">Найти</button>
+        </div>
+        {% for error in form.search.errors %}
+            <span class="help-inline">[{{ error }}]</span>
+        {% endfor %}
+    </form>
+    {% if accounts %}
+    <div>
+        <p>Результаты:</p>
+        <ul>
+            {% for acc in accounts %}
+            <li>
+                <a href={{ url_for('proxy.edit', dn=acc['dn']) }}> {{ acc['uid'] }} </a>
+                <p class="muted">{{ acc['cn'] }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <div>
+        <p>Ничего не найдено</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
